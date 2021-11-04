@@ -20,6 +20,11 @@ const UserSchema = new mongoose.Schema({
         required:true,
         unique:true
     },
+    password:{
+        type:String,
+        required:true,
+        
+    },
     is_verified:{
         type:Boolean,
         required:true,
@@ -28,3 +33,5 @@ const UserSchema = new mongoose.Schema({
 })
 
 const users = mongoose.model("users",UserSchema)
+
+module.exports = users;

@@ -4,11 +4,12 @@ const express = require("express")
 const path = require("path")
 const CookieParser = require("cookie-parser")
 const { PORT } = require("../config")
+const mongoose = require("./modules/mongo")
 
 const app = express()
 
 app.listen(PORT,()=>console.log(`server localhost://${PORT} portida ishladi`))
-
+mongoose()
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(CookieParser())
@@ -20,7 +21,7 @@ fs.readdir(path.join(__dirname,"routes"),(err,files)=>{
         files.forEach((file)=>{
             const routePath = path.join(__dirname,"routes",file)
             const Route = require(routePath)
-            if(Route.path&&Route.router) app.use(Route.path,Route.router)
+            if(Route.path&&Route.router) app.use(`/api${Route.path}`,Route.router)
         })
     }
 })
